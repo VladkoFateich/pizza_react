@@ -6,7 +6,7 @@ export const Content = () => {
   return (
     <div className="content__items">
       {pizzas.map((value) => (
-        <PizzaBlock
+        <PizzaBlock key={value.id}
           image={value.imageUrl}
           title={value.title}
           price={value.price}
