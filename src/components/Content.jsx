@@ -1,20 +1,28 @@
 import React from "react";
 import { PizzaBlock } from "./PizzaBlock";
-import pizzas from "../assets/pizza.json";
+// import pizzas from "../assets/pizza.json"; теперь данные берутся с mockAPI
+import Skeleton from "../components/PizzaBlock/Skeleton";
 
 export const Content = () => {
+  // Узучить что такое fetch
+  const [items, setItems] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    fetch("https://63539295e64783fa8275178b.mockapi.io/items") // Загрузка данных с mockAPI
+      .then((res) => res.json())
+      .then((arr) => {
+        setItems(arr);
+        setIsLoading(false) // говорит что загрузка скелетонов завершилась и рендерит пиццы 
+      }); // сырой способ arr-массив
+  }, []); // отлавливает отрисовку и не перерисовывает много раз благодаря [] изучить, есть видос на канале
   return (
     <div className="content__items">
-      {pizzas.map((value) => (
-        <PizzaBlock key={value.id}
-          image={value.imageUrl}
-          title={value.title}
-          price={value.price}
-          types={value.types}
-          sizes={value.sizes}
-        />
-      ))}
-{/* что бы не писать такой длинный код можно сделать {...value}, но элеметы должны сообыветсвовать клчам из обьекта, т.е. не image={value.imageUrl} а imageUrl={value.imageUrl} */}
+      {isLoading
+        ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
+        : items.map((value) => <PizzaBlock key={value.id} {...value} />)}
+      {/* isLoading создает пустой массив мапит его заменяет undefuned на скелетон иначе рендери вторую часть */}
+      {/* что бы не писать такой длинный код можно сделать {...value}, но элеметы должны сообыветсвовать клчам из обьекта, т.е. не image={value.imageUrl} а imageUrl={value.imageUrl} */}
       {/* что бы передать price числом, то price = {500} */}
       {/* <PizzaBlock title="Салями" price="300" />
       <PizzaBlock title="Пеперони" price="400" />

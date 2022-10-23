@@ -1,6 +1,6 @@
 import React from "react";
 
-export const PizzaBlock = ({ title, price, image, types, sizes }) => {
+export const PizzaBlock = ({ title, price, imageUrl, types, sizes }) => {
   // const [pizzaCount, setPizzaCount] = React.useState(0);
   // const AddPizza = () => {
   //   setPizzaCount(pizzaCount + 1);
@@ -10,7 +10,7 @@ export const PizzaBlock = ({ title, price, image, types, sizes }) => {
   const nameTypes = ["тонкое", "традиционное"];
   return (
     <div className="pizza-block">
-      <img className="pizza-block__image" src={image} alt="Pizza" />
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
 
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">

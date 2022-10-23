@@ -30,7 +30,7 @@ export const Sort = () => {
     {open ? (<div className="sort__popup">
       <ul>
         {list.map((list, i)=><li 
-        key={list} 
+        key={i} 
         onClick={()=> onClickList(i)} 
         className={activeList === i ? 'active' : ''}
         >{list}</li>)}
