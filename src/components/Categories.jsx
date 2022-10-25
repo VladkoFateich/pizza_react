@@ -1,7 +1,7 @@
 import React from "react";
 
-export const Categories = () => {
-  const [activeIndex, setActiveIndex] = React.useState(0);
+export const Categories = (categoryId, onClickCategory) => {
+  // const [activeIndex, setActiveIndex] = React.useState(0);
   const categories = [
     "Все",
     "Мясные",
@@ -10,18 +10,18 @@ export const Categories = () => {
     "Острые",
     "Закрытые",
   ];
-  const onClickIndex = (index) => {
-    setActiveIndex(index);
-  };
+  // const onClickIndex = (index) => {
+  //   setActiveIndex(index);
+  // };
 
   return (
     <div className="categories">
       <ul>
-        {categories.map((value, index) => (
+        {categories.map((categoryName, index) => (
           <li key={index}
-            onClick={() => onClickIndex(index)}
-            className={activeIndex === index ? "active" : ""}
-          >{value}</li>
+            onClick={() => onClickCategory(index)}
+            className={categoryId === index ? "active" : ""}
+          >{categoryName}</li>
         ))}
 {/* при помощи map все эл массива перебираются и помещаются в value index хранит индекс массива*/}
 
