@@ -4,12 +4,12 @@ export const Sort = ({ sortType, onClickSortType }) => {
   const [open, setOpen] = React.useState(false); // Открывает список
   // const [activeList, setActiveList] = React.useState(0);
   const list = [
-    { name: "популярности +", sortProperty: "rating" },
-    { name: "популярности -", sortProperty: "-rating" },
-    { name: "цене +", sortProperty: "price" },
-    { name: "цене -", sortProperty: "-price" },
-    { name: "алфавиту +", sortProperty: "title" },
-    { name: "алфавиту -", sortProperty: "-title" },
+    { name: "популярности (ASC)", sortProperty: "rating" },
+    { name: "популярности (DESC)", sortProperty: "-rating" },
+    { name: "цене (ASC)", sortProperty: "price" },
+    { name: "цене (DESC)", sortProperty: "-price" },
+    { name: "алфавиту (ASC)", sortProperty: "title" },
+    { name: "алфавиту (DESC)", sortProperty: "-title" },
 
   ];
   // можно создать переменную для выбранного элементасписка const sortName = list[activeList], тогда вместо {list[activeList]} просто вставить {sortName}

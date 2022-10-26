@@ -11,7 +11,7 @@ export const Content = ({ categoryId, sortType }) => {
   React.useEffect(() => {
     setIsLoading(true); //  загружает скелетон каждый раз при сортировке
     const sortBy = sortType.sortProperty.replace("-", "");
-    const order = sortType.sortProperty.includes("-") ? "-" : "+"; // что бы не писать все это в order
+    const order = sortType.sortProperty.includes("-") ? "desc" : "asc"; // что бы не писать все это в order
     fetch(
       `https://63539295e64783fa8275178b.mockapi.io/items?${
         // Загрузка данных с mockAPI
