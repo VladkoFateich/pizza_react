@@ -3,20 +3,28 @@ import { PizzaBlock } from "./PizzaBlock";
 // import pizzas from "../assets/pizza.json"; теперь данные берутся с mockAPI
 import Skeleton from "../components/PizzaBlock/Skeleton";
 
-export const Content = () => {
+export const Content = ({ categoryId, sortType }) => {
   // Узучить что такое fetch
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    fetch("https://63539295e64783fa8275178b.mockapi.io/items") // Загрузка данных с mockAPI
+    setIsLoading(true); //  загружает скелетон каждый раз при сортировке
+    const sortBy = sortType.sortProperty.replace("-", "");
+    const order = sortType.sortProperty.includes("-") ? "-" : "+"; // что бы не писать все это в order
+    fetch(
+      `https://63539295e64783fa8275178b.mockapi.io/items?${
+        // Загрузка данных с mockAPI
+        categoryId > 0 ? `category=${categoryId}` : "" // добавляет в ссылку категории
+      }&sortBy=${sortBy}&order=${order}`
+    ) // добавляет в ссылку сортировку, replace('-', '') -удаляет минус из строки ссылки
       .then((res) => res.json())
       .then((arr) => {
         setItems(arr);
-        setIsLoading(false) // говорит что загрузка скелетонов завершилась и рендерит пиццы 
+        setIsLoading(false); // говорит что загрузка скелетонов завершилась и рендерит пиццы
       }); // сырой способ arr-массив
-      window.scroll(0, 0) // при возвращении на страницу перекидыввет на верх
-  }, []); // отлавливает отрисовку и не перерисовывает много раз благодаря [] изучить, есть видос на канале
+    window.scroll(0, 0); // при возвращении на страницу перекидывает наверх
+  }, [categoryId, sortType]); // отлавливает отрисовку и не перерисовывает много раз благодаря [] изучить, есть видос на канале про хуки
   return (
     <div className="content__items">
       {isLoading
@@ -25,15 +33,6 @@ export const Content = () => {
       {/* isLoading создает пустой массив мапит его заменяет undefuned на скелетон иначе рендери вторую часть */}
       {/* что бы не писать такой длинный код можно сделать {...value}, но элеметы должны сообыветсвовать клчам из обьекта, т.е. не image={value.imageUrl} а imageUrl={value.imageUrl} */}
       {/* что бы передать price числом, то price = {500} */}
-      {/* <PizzaBlock title="Салями" price="300" />
-      <PizzaBlock title="Пеперони" price="400" />
-      <PizzaBlock title="Пеперони*2" price="600" />
-      <PizzaBlock title="Деревенская" price="350" />
-      <PizzaBlock title="Студенческая" price="250" />
-      <PizzaBlock title="Три тройки" price="333" />
-      <PizzaBlock title="Три четверки" price="444" />
-      <PizzaBlock title="Три пятерки" price="555" />
-      <PizzaBlock title="Diablo" price="666" /> */}
     </div>
   );
 };

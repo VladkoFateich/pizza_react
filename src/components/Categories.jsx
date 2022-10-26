@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Categories = (categoryId, onClickCategory) => {
+export const Categories = ({categoryId, onClickCategory}) => {
   // const [activeIndex, setActiveIndex] = React.useState(0);
   const categories = [
     "Все",
@@ -23,7 +23,7 @@ export const Categories = (categoryId, onClickCategory) => {
             className={categoryId === index ? "active" : ""}
           >{categoryName}</li>
         ))}
-{/* при помощи map все эл массива перебираются и помещаются в value index хранит индекс массива*/}
+{/* при помощи map все эл массива перебираются и помещаются в categoryName index хранит индекс массива*/}
 
       </ul>
     </div>
