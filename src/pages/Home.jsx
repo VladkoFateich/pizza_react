@@ -3,7 +3,7 @@ import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort";
 import { Content } from "../components/Content";
 
-export const Home = () => {
+export const Home = ({searchValue}) => {
   const [categoryId, setCategoryId] = React.useState(0);
   const [sortType, setSortType] = React.useState({
     name: "популярности",
@@ -20,7 +20,7 @@ export const Home = () => {
         <Sort sortType={sortType} onClickSortType={(id) => setSortType(id)} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <Content categoryId={categoryId} sortType={sortType} />
+      <Content categoryId={categoryId} sortType={sortType} searchValue = {searchValue}/>
     </div>
   );
 };

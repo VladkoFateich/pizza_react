@@ -3,7 +3,7 @@ import { PizzaBlock } from "./PizzaBlock";
 // import pizzas from "../assets/pizza.json"; теперь данные берутся с mockAPI
 import Skeleton from "../components/PizzaBlock/Skeleton";
 
-export const Content = ({ categoryId, sortType }) => {
+export const Content = ({ categoryId, sortType, searchValue }) => {
   // Узучить что такое fetch
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -29,7 +29,14 @@ export const Content = ({ categoryId, sortType }) => {
     <div className="content__items">
       {isLoading
         ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-        : items.map((value) => <PizzaBlock key={value.id} {...value} />)}
+        : items
+            .filter((obj) => {
+              if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
+                return true;
+              }
+              return false;
+            })
+            .map((value) => <PizzaBlock key={value.id} {...value} />)}
       {/* isLoading создает пустой массив мапит его заменяет undefuned на скелетон иначе рендери вторую часть */}
       {/* что бы не писать такой длинный код можно сделать {...value}, но элеметы должны сообыветсвовать клчам из обьекта, т.е. не image={value.imageUrl} а imageUrl={value.imageUrl} */}
       {/* что бы передать price числом, то price = {500} */}

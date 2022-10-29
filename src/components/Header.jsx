@@ -1,7 +1,8 @@
 import HeaderLogo from '../assets/img/pizza-logo.svg' // Или просто закинуть папку img в папку public и указать путь src="img/pizza-logo.svg" Папку со статичными файлами принято называть assets
 import {Link} from 'react-router-dom'
+import { Search } from './Search/Search';
 
-export const Header = () => {
+export const Header = ({searchValue, setSearchValue}) => {
     return (
       <div className="header">
         <div className="container">
@@ -14,6 +15,7 @@ export const Header = () => {
             </div>
           </div>
           </Link>
+          <Search searchValue = {searchValue} setSearchValue={setSearchValue} />
           <div className="header__cart">
             <Link to='/cart' href="/cart.html" className="button button--cart">
               <span>520 ₽</span>
