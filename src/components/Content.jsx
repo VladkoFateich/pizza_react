@@ -3,17 +3,22 @@ import { PizzaBlock } from "./PizzaBlock";
 // import pizzas from "../assets/pizza.json"; теперь данные берутся с mockAPI
 import Skeleton from "../components/PizzaBlock/Skeleton";
 
-export const Content = ({ categoryId, sortType, searchValue }) => {
+export const Content = ({ categoryId, sortType, searchValue, currentPage}) => {
   // Узучить что такое fetch
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+
+  
 
   React.useEffect(() => {
     setIsLoading(true); //  загружает скелетон каждый раз при сортировке
     const sortBy = sortType.sortProperty.replace("-", "");
     const order = sortType.sortProperty.includes("-") ? "desc" : "asc"; // что бы не писать все это в order
+
+
     fetch(
-      `https://63539295e64783fa8275178b.mockapi.io/items?${
+      `https://63539295e64783fa8275178b.mockapi.io/items?page=${currentPage}&limit=3&
+      ${
         // Загрузка данных с mockAPI
         categoryId > 0 ? `category=${categoryId}` : "" // добавляет в ссылку категории
       }&sortBy=${sortBy}&order=${order}`
@@ -24,7 +29,7 @@ export const Content = ({ categoryId, sortType, searchValue }) => {
         setIsLoading(false); // говорит что загрузка скелетонов завершилась и рендерит пиццы
       }); // сырой способ arr-массив
     window.scroll(0, 0); // при возвращении на страницу перекидывает наверх
-  }, [categoryId, sortType]); // отлавливает отрисовку и не перерисовывает много раз благодаря [] изучить, есть видос на канале про хуки
+  }, [categoryId, sortType, currentPage]); // отлавливает отрисовку и не перерисовывает много раз благодаря [] изучить, есть видос на канале про хуки
   return (
     <div className="content__items">
       {isLoading
@@ -43,6 +48,14 @@ export const Content = ({ categoryId, sortType, searchValue }) => {
     </div>
   );
 };
+
+// если поиск осуществляется без backend то испольуем между item. ... .map -.filter((obj) => {
+//   if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
+//     return true;
+//   }
+//   return false;
+// }) если через backend (на мокапи плохо работает если срезу сортировка и поиск) то делаем на примере сортировки const search = searchValue ? `search=${searchValue}` : ''; и добавляем в fetch ${search}
+// page=1&limit=3& пагинация первая всегда страница 1 и показывать по 3 пиццы что бы оставить поганицию и отремонтировать страницу надо в гридах сделать 3 столбца а не 4
 
 {
   /* <div className="pizza-block">

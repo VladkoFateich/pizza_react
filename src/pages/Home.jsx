@@ -1,7 +1,9 @@
 import React from "react";
+
 import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort";
 import { Content } from "../components/Content";
+import { Pagination } from "../components/Pagination";
 
 export const Home = ({searchValue}) => {
   const [categoryId, setCategoryId] = React.useState(0);
@@ -9,6 +11,7 @@ export const Home = ({searchValue}) => {
     name: "популярности",
     sortProperty: "rating",
   });
+  const [currentPage, setCurrentPage] = React.useState(1)
 
   return (
     <div className="container">
@@ -20,7 +23,9 @@ export const Home = ({searchValue}) => {
         <Sort sortType={sortType} onClickSortType={(id) => setSortType(id)} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <Content categoryId={categoryId} sortType={sortType} searchValue = {searchValue}/>
-    </div>
+      <Content categoryId={categoryId} sortType={sortType} searchValue = {searchValue} currentPage={currentPage} />
+      <Pagination onChangePage={(number) => setCurrentPage(number)} />
+    </div> // this для передачи от ребенка к родителю 
   );
 };
+//

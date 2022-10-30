@@ -1,3 +1,4 @@
+// пропсдрилинг это когда элемент прокидывается больше чем через 1 уровень это не хорошо 
 import "./scss/app.scss";
 import { Header } from "./components/Header";
 
