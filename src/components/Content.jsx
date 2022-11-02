@@ -2,11 +2,13 @@ import React from "react";
 import { PizzaBlock } from "./PizzaBlock";
 // import pizzas from "../assets/pizza.json"; теперь данные берутся с mockAPI
 import Skeleton from "../components/PizzaBlock/Skeleton";
+import { SearchContext } from "../App";
 
-export const Content = ({ categoryId, sortType, searchValue, currentPage}) => {
+export const Content = ({ categoryId, sortType, currentPage}) => {
   // Узучить что такое fetch
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const { searchValue } = React.useContext(SearchContext);
 
   
 

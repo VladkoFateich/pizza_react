@@ -2,7 +2,7 @@ import HeaderLogo from '../assets/img/pizza-logo.svg' // Или просто з�
 import {Link} from 'react-router-dom'
 import { Search } from './Search/Search';
 
-export const Header = ({searchValue, setSearchValue}) => {
+export const Header = () => { // {searchValue, setSearchValue} не нужно перердавать через пропс так как используется
     return (
       <div className="header">
         <div className="container">
@@ -15,7 +15,7 @@ export const Header = ({searchValue, setSearchValue}) => {
             </div>
           </div>
           </Link>
-          <Search searchValue = {searchValue} setSearchValue={setSearchValue} />
+          <Search  /> {/* searchValue = {searchValue} setSearchValue={setSearchValue} */}
           <div className="header__cart">
             <Link to='/cart' href="/cart.html" className="button button--cart">
               <span>520 ₽</span>
