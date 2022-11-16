@@ -24,13 +24,12 @@ export const Categories = ({categoryId, onClickCategory}) => {
           >{categoryName}</li>
         ))}
 {/* при помощи map все эл массива перебираются и помещаются в categoryName index хранит индекс массива*/}
-
       </ul>
     </div>
   );
 };
 // className={activeIndex === 0 ? 'active': ''} если activeIndex = 0 то в className возвращается 'active', в остальных случаях пустое знаечение
-// onClick={()=>onClickAktive()} онанимная функция которая вызывает функцию on onClickAktive
+// onClick={()=>onClickAktive()} ананимная функция которая вызывает функцию on onClickAktive
         {/* <li
           onClick={() => onClickIndex(1)}
           className={activeIndex === 1 ? "active" : ""}

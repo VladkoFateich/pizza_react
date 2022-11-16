@@ -1,6 +1,8 @@
 import React from "react";
-import { PizzaBlock } from "./PizzaBlock";
+import axios from "axios";
+
 // import pizzas from "../assets/pizza.json"; теперь данные берутся с mockAPI
+import { PizzaBlock } from "./PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import { SearchContext } from "../App";
 
@@ -10,26 +12,35 @@ export const Content = ({ categoryId, sortType, currentPage}) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const { searchValue } = React.useContext(SearchContext);
 
-  
-
   React.useEffect(() => {
     setIsLoading(true); //  загружает скелетон каждый раз при сортировке
-    const sortBy = sortType.sortProperty.replace("-", "");
-    const order = sortType.sortProperty.includes("-") ? "desc" : "asc"; // что бы не писать все это в order
+    const sortBy = sortType.replace("-", "");
+    const order = sortType.includes("-") ? "desc" : "asc"; // что бы не писать все это в order
 
+    // fetch(
+    //   `https://63539295e64783fa8275178b.mockapi.io/items?page=${currentPage}&limit=3&
+    //   ${
+    //   Загрузка данных с mockAPI
+    //     categoryId > 0 ? `category=${categoryId}` : "" // добавляет в ссылку категории
+    //   }&sortBy=${sortBy}&order=${order}`
+    // ) // добавляет в ссылку сортировку, replace('-', '') -удаляет минус из строки ссылки
+    //   .then((res) => res.json())
+    //   .then((arr) => {
+    //     setItems(arr);
+    //     setIsLoading(false); // говорит что загрузка скелетонов завершилась и рендерит пиццы
+    //   }); // сырой способ arr-массив
 
-    fetch(
-      `https://63539295e64783fa8275178b.mockapi.io/items?page=${currentPage}&limit=3&
-      ${
-        // Загрузка данных с mockAPI
-        categoryId > 0 ? `category=${categoryId}` : "" // добавляет в ссылку категории
-      }&sortBy=${sortBy}&order=${order}`
-    ) // добавляет в ссылку сортировку, replace('-', '') -удаляет минус из строки ссылки
-      .then((res) => res.json())
-      .then((arr) => {
-        setItems(arr);
-        setIsLoading(false); // говорит что загрузка скелетонов завершилась и рендерит пиццы
-      }); // сырой способ arr-массив
+    axios
+      .get(
+        `https://63539295e64783fa8275178b.mockapi.io/items?page=${currentPage}&limit=3&${
+          categoryId > 0 ? `category=${categoryId}` : ""
+        }&sortBy=${sortBy}&order=${order}`
+      )
+      .then((res) => {
+        setItems(res.data); //если вывести в консоль ты выведет дата, поэтому res.data
+        setIsLoading(false);
+      });
+
     window.scroll(0, 0); // при возвращении на страницу перекидывает наверх
   }, [categoryId, sortType, currentPage]); // отлавливает отрисовку и не перерисовывает много раз благодаря [] изучить, есть видос на канале про хуки
   return (

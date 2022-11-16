@@ -3,6 +3,7 @@ import "./scss/app.scss";
 import { Header } from "./components/Header";
 
 import React from "react";
+
 import { Routes, Route } from "react-router-dom";
 
 import { Home } from "./pages/Home";
@@ -14,6 +15,7 @@ export const SearchContext = React.createContext("");
 function App() {
   // изучить контекст
   const [searchValue, setSearchValue] = React.useState("");
+
   return (
     <div className="wrapper">
       <SearchContext.Provider value={{searchValue, setSearchValue}}> {/*Provider это компонент  эта строчка используется что бы напрямую прокинуть в нужную компоненту searchValue и setSearchValue и принимаем их там где они нужны */}

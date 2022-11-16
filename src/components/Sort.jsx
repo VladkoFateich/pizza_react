@@ -1,22 +1,30 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSort } from "../redux/slices/filterSlice";
 
-export const Sort = ({ sortType, onClickSortType }) => {
+const list = [
+  { name: "популярности (ASC)", sortProperty: "rating" },
+  { name: "популярности (DESC)", sortProperty: "-rating" },
+  { name: "цене (ASC)", sortProperty: "price" },
+  { name: "цене (DESC)", sortProperty: "-price" },
+  { name: "алфавиту (ASC)", sortProperty: "title" },
+  { name: "алфавиту (DESC)", sortProperty: "-title" },
+];
+
+export const Sort = () => {
+  //{ sortType, onClickSortType }
+  const dispatch = useDispatch();
+  const sort = useSelector((state) => state.filterSlice.sort);
   const [open, setOpen] = React.useState(false); // Открывает список
   // const [activeList, setActiveList] = React.useState(0);
-  const list = [
-    { name: "популярности (ASC)", sortProperty: "rating" },
-    { name: "популярности (DESC)", sortProperty: "-rating" },
-    { name: "цене (ASC)", sortProperty: "price" },
-    { name: "цене (DESC)", sortProperty: "-price" },
-    { name: "алфавиту (ASC)", sortProperty: "title" },
-    { name: "алфавиту (DESC)", sortProperty: "-title" },
 
-  ];
   // можно создать переменную для выбранного элементасписка const sortName = list[activeList], тогда вместо {list[activeList]} просто вставить {sortName}
-  const onClickList = (i) => {
-    onClickSortType(i); // Открывает попап сортировки
+  const onClickList = (obj) => {
+    dispatch(setSort(obj));
+    // onClickSortType(i); // Открывает попап сортировки
     setOpen(false); // Закрывает попап сортировки
   };
+
   return (
     <div className="sort">
       <div className="sort__label">
@@ -33,7 +41,7 @@ export const Sort = ({ sortType, onClickSortType }) => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{sortType.name}</span>
+        <span onClick={() => setOpen(!open)}>{sort.name}</span>
       </div>
       {open ? (
         <div className="sort__popup">
@@ -43,7 +51,7 @@ export const Sort = ({ sortType, onClickSortType }) => {
                 key={i}
                 onClick={() => onClickList(obj)}
                 className={
-                  sortType.sortProperty === obj.sortProperty ? "active" : ""
+                  sort.sortProperty === obj.sortProperty ? "active" : ""
                 }
               >
                 {obj.name}

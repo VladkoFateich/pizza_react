@@ -1,15 +1,39 @@
 import React from "react";
+import debounce from "lodash"; //debounce метод отложенного действия
+
 import { SearchContext } from "../../App";
 import style from "./Search.module.scss";
 
-export const Search = () => { // { searchValue, setSearchValue }
+export const Search = () => {
+  // { searchValue, setSearchValue }
   // изучить event target
-  const {searchValue, setSearchValue} = React.useContext(SearchContext)
+  const [value, setValue] = React.useState('')
+  const {setSearchValue } = React.useContext(SearchContext);
+  const inputRef = React.useRef(); //обращение к элементу
+
+  const updateSearchValue = React.useCallback(
+    debounce((str) => {
+      setSearchValue(str);
+    }, 350),
+    []
+  );
+  const onChangeInput = event => {
+    setValue(event.target.value)
+    updateSearchValue(event.target.value)
+  }
+  const OnClickClear = () => {
+    //после очистки поиска фокус остается на inpute
+    setSearchValue("");
+    setValue("");
+    inputRef.current.focus();
+  };
+
+
   return (
     <div className={style.root}>
       <svg
         className={style.icon}
-        enable-background="new 0 0 32 32"
+        enableBackground="new 0 0 32 32"
         id="Glyph"
         version="1.1"
         viewBox="0 0 32 32"
@@ -21,14 +45,16 @@ export const Search = () => { // { searchValue, setSearchValue }
         />
       </svg>
       <input
-        value={searchValue} // контролируемый инпут без него не будет работать отчистка через Х
-        onChange={(event) => setSearchValue(event.target.value)}
+        ref={inputRef}
+        value = {value}
+        //value={searchValue}  контролируемый инпут без него не будет работать отчистка через Х
+        onChange={onChangeInput}
         className={style.input}
         placeholder="Поиск пиццы..."
       />
-      {searchValue && ( // условный рендер иконка появляется когда ввод в инпут происходит
+      {value && ( // условный рендер иконка появляется когда ввод в инпут происходит
         <svg
-        onClick={()=>setSearchValue('')} // очистить кликом на Х
+          onClick={() => OnClickClear} // очистить кликом на Х
           className={style.iconClear}
           viewBox="8 7 32 32"
           xmlns="http://www.w3.org/2000/svg"
